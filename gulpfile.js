@@ -8,6 +8,8 @@ var fs = require('fs');
 var mkdirp = require('mkdirp');
 var chalk = require('chalk');
 var watch = require('gulp-watch');
+var browserSync = require('browser-sync').create();
+const closureCompiler = require('google-closure-compiler').gulp();
 
 //Chalk colors
 var error = chalk.bold.red;
@@ -15,6 +17,13 @@ var success = chalk.green;
 var regular = chalk.white;
 
 gulp.task('watch', (done) => {
+
+	browserSync.init({
+	   server: {
+		   baseDir: "./build"
+	   }
+   });
+
 	gulp.watch('./src/js/**/*.js', gulp.series('build-js', 'zip', 'check'));
 	gulp.watch('./src/html/**/*.html', gulp.series('build-html', 'check'));
 	gulp.watch('./src/css/**/*.css', gulp.series('build-css', 'check'));
@@ -37,10 +46,25 @@ gulp.task('init', (done) => {
 });
 
 gulp.task('build-js', (done) => {
-	return gulp.src('./src/js/**/*.js')
-	.pipe(concat('game.js'))
-	.pipe(uglify())
-	.pipe(gulp.dest('./build/'));
+
+	return gulp.src('./src/js/**/*.js', {base: './'})
+		.pipe(concat('game.js'))
+      .pipe(closureCompiler({
+          compilation_level: 'ADVANCED',
+          warning_level: 'VERBOSE',
+          output_wrapper: '%output%',
+          js_output_file: 'output.min.js'
+        }, {
+          platform: ['native', 'java', 'javascript']
+        }))
+		.on('error', function (err) {
+            console.log(err.toString());
+
+            this.emit('end');
+        })
+      .pipe(gulp.dest('./build/'));
+
+
 });
 
 gulp.task('build-html', (done) => {
@@ -75,8 +99,11 @@ gulp.task('check', gulp.series('zip', (done) => {
 	} else {
 		console.log(success("Your zip compressed game is " + fileSize + " bytes."));
 	}
+
+    browserSync.reload();
 	done();
 }));
+
 
 gulp.task('build', gulp.series('build-html', 'build-js', 'build-assets', 'check', (done) => {
 	done();
