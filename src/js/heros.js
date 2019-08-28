@@ -10,6 +10,14 @@ class Heros
 		this.life = 1000;
 		this.maxLife = 1000;
 		this.cooldown = 0;
+
+		this.upgrades = [
+			[1,0,1,0],
+			[1,1,0,1],
+			[0,0,1,1],
+			[1,1,0,0],
+			[1,0,0,0]
+		]
 	}
 
 	draw()

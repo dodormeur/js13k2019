@@ -16,21 +16,19 @@ class Background
 	draw()
 	{
 
-		var rW = canvas.width/1600.0;
-		var rH = canvas.height/900.0;
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
 		ctx.strokeStyle="blue";
 		ctx.lineWidth = 0.1;
 		ctx.beginPath();
 		for(var i = 0;i<900;i+=20)
 		{
-			ctx.moveTo(0,i*rH);
-			ctx.lineTo(rW*1600,i*rH);
+			ctx.moveTo(0,i*rW);
+			ctx.lineTo(rW*1600,i*rW);
 		}
 		for(var j = -this.scroll;j<1600;j+=20)
 		{
 			ctx.moveTo(j*rW,0);
-			ctx.lineTo(j*rW,900*rH);
+			ctx.lineTo(j*rW,900*rW);
 		}
 		ctx.closePath();
 		ctx.stroke();
@@ -39,31 +37,35 @@ class Background
 
 	drawForHUD()
 	{
-		var rW = canvas.width/1600.0;
-		var rH = canvas.height/900.0;
-		ctx.clearRect(0, 0, canvas.width, hudStart*rH);
+		ctx.clearRect(0, 0, canvas.width, hudStart*rW);
 
 		ctx.strokeStyle="blue";
 		ctx.lineWidth = 0.1;
 		ctx.beginPath();
 		for(var i = 0;i<hudStart;i+=20)
 		{
-			ctx.moveTo(0,i*rH);
-			ctx.lineTo(rW*1600,i*rH);
+			ctx.moveTo(0,i*rW);
+			ctx.lineTo(rW*1600,i*rW);
 		}
 		for(var j = -this.scroll;j<1600;j+=20)
 		{
 			ctx.moveTo(j*rW,0);
-			ctx.lineTo(j*rW,hudStart*rH);
+			ctx.lineTo(j*rW,hudStart*rW);
 		}
 		ctx.closePath();
 		ctx.stroke();
 		ctx.beginPath();
 		ctx.strokeStyle="red";
-		ctx.lineWidth = 1;
-		ctx.moveTo(0,hudStart*rH);
-		ctx.lineTo(rW*1600,hudStart*rH);
+		ctx.lineWidth = 1*rW;
+		ctx.moveTo(0,hudStart*rW);
+		ctx.lineTo(rW*1600,hudStart*rW);
 		ctx.closePath();
 		ctx.stroke();
+
+		ctx.fillStyle="#888";
+		ctx.strokeStyle="transparent";
+		ctx.lineWidth = 0;
+		circle(562,36,12,true);
+		circle(1046,36,12,true);
 	}
 }
