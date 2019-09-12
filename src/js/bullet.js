@@ -174,9 +174,9 @@ class Bullet
 			case 0:return 100;
 			case 1:return 5;
 			case 2: return 200;
-			case 3: return 1000;
+			case 3: return 500;
 			case 5: return 50;
-			case 6:return 10;
+			case 6:return 5;
 			case 8:return 500;
 		}
 		return 1;

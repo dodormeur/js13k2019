@@ -19,11 +19,12 @@ class Enemy
 		this.type = type;
 		this.drawing = type;
 		this.speed = 1;
+		this.tookSmallThisFrame = false
 		switch(type)
 		{
 			case 0:
 				this.life = 99999;
-				this.drawing = 0;
+				this.drawing = 12;
 				break;
 			case 1:
 				this.life = 500;
@@ -38,51 +39,51 @@ class Enemy
 			case 3:
 				this.life = 100;
 				this.drawing = 3;
-				this.speed = 3;
+				this.speed = 1.9;
 				break;
 			case 4:
-				this.life = 3000;
+				this.life = 1000;
 				this.drawing = 4;
 				this.speed = 0.2;
 				break;
 			case 5:
-				this.life = 2000;
+				this.life = 1500;
 				this.drawing = 5;
 				this.speed = 1.4;
 				break;
 			case 6:
-				this.life = 4000;
+				this.life = 3000;
 				this.drawing = 6;
 				this.speed = 0.8;
 				break;
 			case 7:
-				this.life = 5000;
+				this.life = 2500;
 				this.drawing = 7;
 				this.speed = 0.7;
 				break;
 			case 8:
-				this.life = 6000;
+				this.life = 3000;
 				this.drawing = 8;
 				this.speed = 1.5;
 				break;
 			case 9:
-				this.life = 5000;
+				this.life = 3000;
 				this.drawing = 9;
-				this.speed = 2.5;
+				this.speed = 1.5;
 				break;
 			case 11:
-				this.life = 10000;
+				this.life = 5000;
 				this.drawing = 11;
 				this.speed = 1;
 				break;
 			case 12:
-				this.life = 20000;
+				this.life = 15000;
 				this.drawing = 12;
 				this.speed = 1;
 				break;
 
 		}
-
+		this.speed /=2;
 		this.fireRate = (shoot%4)*(shoot%4)+1;
 		this.fireType = Math.floor(shoot/4);
 		this.mustRemove = false;
@@ -93,7 +94,6 @@ class Enemy
 	}
 	draw()
 	{
-
 		ctx.strokeStyle="black";
 		ctx.fillStyle="white";
 		if(this.tookDamage>0)
@@ -259,7 +259,7 @@ class Enemy
 		/*this.angle+= 0.01;
 		this.x+= 0.1*Math.cos(this.angle);
 		this.y+= 0.1*Math.sin(this.angle);*/
-
+		this.tookSmallThisFrame = false
 		if(oob(this.x,this.y,1000))this.mustRemove = true;
 		this.tookDamage--;
 		this.frameCount++;
@@ -491,6 +491,12 @@ class Enemy
 	}
 	collide(damage)
 	{
+		if(damage < 10)
+		{
+			if(this.tookSmallThisFrame == true)
+				return;
+			this.tookSmallThisFrame = true;
+		}
 		if(damage > this.tookDamage)
 		{
 			this.tookDamage = damage;

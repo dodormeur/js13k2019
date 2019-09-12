@@ -58,7 +58,7 @@ class Heros
 		if(this.bulletproofFrame>0)this.bulletproofFrame--;
 		if(this.invulnerable>0)this.invulnerable--;
 		if(this.energy<this.maxEnergy)
-			this.energy++;
+			this.energy+=1.5;
 		if(this.frameUltimate >0)this.frameUltimate ++;
 		var dirX = 0;
 		var dirY = 0;
@@ -86,13 +86,13 @@ class Heros
 		}
 		if(keys[70])
 		{
-			if(this.energy == this.maxEnergy)
+			if(this.energy >= this.maxEnergy)
 			{
 				this.energy = 0;
 				this.frameUltimate = 1;
 			}
 		}
-		if(keys[65])
+		if((keys[65] || keys[81]) && this.upgrades[3][0])
 		{
 			if(this.energy > this.maxEnergy*0.2 && this.cooldown[8]<=0)
 			{
@@ -105,7 +105,7 @@ class Heros
 				//pare balle
 			}
 		}
-		if(keys[90])
+		if((keys[90] || keys[87])  && this.upgrades[3][1])
 		{
 			if(this.energy > this.maxEnergy*0.4 && this.cooldown[9]<=0)
 			{
@@ -116,7 +116,7 @@ class Heros
 				//shield
 			}
 		}
-		if(keys[69])
+		if(keys[69] && this.upgrades[3][2])
 		{
 			if(this.energy > this.maxEnergy*0.4 && this.cooldown[10]<=0)
 			{
@@ -125,7 +125,7 @@ class Heros
 				this.cooldown[10] = 200;
 			}
 		}
-		if(keys[82])
+		if(keys[82] && this.upgrades[3][3])
 		{
 			if(this.energy > this.maxEnergy*0.4 && this.cooldown[11]<=0)
 			{

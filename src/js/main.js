@@ -82,7 +82,7 @@ function debug()
 	for(var i = 0;i<d_frames.length;i++)
 		total+=d_frames[i];
 	var meanFps =total/d_frames.length;
-
+	if((Math.round(10000/meanFps)/10)<45)
 	blackText("fps:"+Math.round(10000/meanFps)/10, 1590,40,35,"end");
 	d_pointer++;
 	if(d_pointer>120)d_pointer = 0;
@@ -92,6 +92,7 @@ function debug()
 
 function debugHit()
 {
+	
 	ctx.fillStyle="transparent";
 	ctx.strokeStyle="magenta";
 	ctx.lineWidth=1;

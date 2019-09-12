@@ -8,7 +8,7 @@ class Shop
 		this.nextType = nextType;
 		this.nextLevel = nextLevel;
 		this.selected = {x:0,y:0};
-		this.keyUp = true;
+		this.keyUp = false;
 
 		this.heros = new Heros();
 		this.heros.x = 100;
@@ -21,7 +21,13 @@ class Shop
 		]
 
 		this.selectedCost = 0;
-		this.maxCost = 1000;
+		this.maxCost = 200;
+		
+		this.levelCost = [2500,2000,1750,1500,1300,1100,900,700,500,350,200,200,200,200,200];
+		if(nextLevel == 0)
+			this.maxCost = 3001;
+		else if(nextLevel<12)
+			this.maxCost = this.levelCost[nextLevel-1]+1;
 		this.error = false;
 		this.finished = false;
 
@@ -30,7 +36,8 @@ class Shop
 
 		bullets_ally = [];
 		bullets_enemy = [];
-		enemies.push(new Enemy(0,0,0,1200,800));
+		enemies = [];
+		enemies.push(new Enemy(0,0,0,1100,800));
 	}
 
 	calculateCost()
@@ -50,7 +57,7 @@ class Shop
 	{
 
 		this.calculateCost();
-		if(this.selectedCost<this.maxCost)
+		if(this.selectedCost<=this.maxCost)
 		{
 			this.finished=true;
 		}
@@ -72,7 +79,7 @@ class Shop
 			if(keys[32])heros.upgrades[this.selected.x][this.selected.y] = !heros.upgrades[this.selected.x][this.selected.y];
 			if(keys[13])this.finish();
 		}
-		if(keys[38] || keys[40] || keys[37] || keys[39] || keys[32])
+		if(keys[38] || keys[40] || keys[37] || keys[39] || keys[32]|| keys[13])
 		{
 			if(this.keyUp == true)
 				this.heros.frameUltimate = 1;
@@ -83,7 +90,7 @@ class Shop
 		this.selected.y = (this.selected.y+4)%4;
 
 		this.calculateCost();
-		if(this.maxCost>this.selectedCost)this.error = 0;
+		if(this.maxCost>=this.selectedCost)this.error = 0;
 
 		this.heros.upgrades[this.selected.x][this.selected.y] = 1;
 		this.heros.fire();
@@ -201,7 +208,7 @@ class Shop
 		blackText("Welcome to the store !",802,60,40,"center");
 		ctx.fillStyle = this.maxCost<this.selectedCost?"red":"green";
 		colorText("Total cost : "+this.selectedCost+" $",20,60,40,"left");
-		blackText("Maximum cost : "+this.maxCost+" $",20,120,40,"left");
+		blackText("Maximum cost : "+(this.maxCost-1)+" $",20,120,40,"left");
 		blackText("Press space to (un)equip",1580,60,40,"right");
 		blackText("Press enter to finish",1580,120,40,"right");
 
@@ -232,9 +239,9 @@ class Shop
 function getPriceUpgrade()
 {
 	return [
-		[100,200,300,400],
-		[110,210,310,410],
-		[120,220,320,420],
-		[130,230,330,430]
+		[100,150,300,400],
+		[400,100,200,150],
+		[200,100,200,300],
+		[100,100,100,100]
 	];
 }

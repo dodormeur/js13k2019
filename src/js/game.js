@@ -35,10 +35,137 @@ class Game
 	loadLevel(which,mode)
 	{
 		this.waves = [];
-		//if(mode == 1)
+		which %= 10;
+		if(mode == 0)
 		{
-			this.waves.push({time:20,
-				enemies : this.loadWave(1,11,30)});
+			switch(which)
+			{
+				case 0 :
+					this.waves.push({time:20,
+						enemies : this.loadWave(0,2,17*4+2)});
+					this.waves.push({time:2000,
+						enemies : this.loadWave(1,11,21)});
+					this.waves.push({time:4000,
+						enemies : this.loadWave(6,7,26)});	
+					this.waves.push({time:4000,
+						enemies : this.loadWave(4,6,9)});	
+					this.waves.push({time:6000,
+						enemies : this.loadWave(9,9,12)});	
+					this.waves.push({time:8000,
+						enemies : this.loadWave(12,8,14)});			
+				break;
+				case 1 :
+					this.waves.push({time:20,
+						enemies : this.loadWave(18,12,24*4+3)});
+					this.waves.push({time:2000,
+						enemies : this.loadWave(3,7,41)});
+					this.waves.push({time:4000,
+						enemies : this.loadWave(2,8,28)});	
+					this.waves.push({time:4000,
+						enemies : this.loadWave(10,9,9)});	
+					this.waves.push({time:6000,
+						enemies : this.loadWave(11,5,13)});	
+					this.waves.push({time:8000,
+						enemies : this.loadWave(15,12,23*4+2)});					
+				break;
+				
+				case 2:
+				
+				this.waves.push({time:20,
+					enemies : this.loadWave(6,3,8*4+3)});
+				this.waves.push({time:2000,
+					enemies : this.loadWave(16,5,23)});
+				this.waves.push({time:4000,
+					enemies : this.loadWave(7,1,34)});	
+				this.waves.push({time:4000,
+					enemies : this.loadWave(14,2,15)});	
+				this.waves.push({time:7000,
+					enemies : this.loadWave(12,4,54)});	
+				this.waves.push({time:8000,
+					enemies : this.loadWave(13,5,43)});
+					
+				break;
+				case 3:
+				this.waves.push({time:20,
+					enemies : this.loadWave(9,2,77)});
+				this.waves.push({time:1000,
+					enemies : this.loadWave(14,7,75)});
+				this.waves.push({time:2000,
+					enemies : this.loadWave(11,6,34)});	
+				this.waves.push({time:3000,
+					enemies : this.loadWave(12,1,52)});	
+				break;
+				case 4:
+				this.waves.push({time:20,
+					enemies : this.loadWave(16,12,24*4+3)});
+				this.waves.push({time:200,
+					enemies : this.loadWave(15,12,25*4+3)});
+				this.waves.push({time:400,
+					enemies : this.loadWave(14,12,26*4+3)});
+				break;
+				case 5:
+				this.waves.push({time:20,
+					enemies : this.loadWave(1,11,70)});
+				this.waves.push({time:2000,
+					enemies : this.loadWave(4,7,40)});
+				this.waves.push({time:4000,
+					enemies : this.loadWave(5,2,11)});	
+				this.waves.push({time:6000,
+					enemies : this.loadWave(10,3,9)});	
+				this.waves.push({time:8000,
+					enemies : this.loadWave(11,4,78)});	
+				this.waves.push({time:10000,
+					enemies : this.loadWave(14,5,82)});
+				break;
+				case 6:
+				
+				this.waves.push({time:20,
+					enemies : this.loadWave(6,3,8*4+3)});
+				this.waves.push({time:2000,
+					enemies : this.loadWave(16,5,23)});
+				this.waves.push({time:4000,
+					enemies : this.loadWave(7,1,34)});	
+				this.waves.push({time:4000,
+					enemies : this.loadWave(14,2,15)});	
+				this.waves.push({time:7000,
+					enemies : this.loadWave(12,4,54)});	
+				this.waves.push({time:8000,
+					enemies : this.loadWave(13,5,43)});
+					
+				break;
+				case 7 :
+					this.waves.push({time:20,
+						enemies : this.loadWave(15,6,79)});
+					this.waves.push({time:2000,
+						enemies : this.loadWave(3,2,75)});
+					this.waves.push({time:4000,
+						enemies : this.loadWave(8,1,15)});	
+					this.waves.push({time:6000,
+						enemies : this.loadWave(15,9,23)});	
+					this.waves.push({time:7000,
+						enemies : this.loadWave(11,8,55)});	
+					this.waves.push({time:8000,
+						enemies : this.loadWave(15,7,61)});					
+				break;
+				case 8 :
+					this.waves.push({time:20,
+						enemies : this.loadWave(5,4,43)});
+					this.waves.push({time:2000,
+						enemies : this.loadWave(13,5,76)});
+					this.waves.push({time:4000,
+						enemies : this.loadWave(12,6,17)});	
+					this.waves.push({time:6000,
+						enemies : this.loadWave(5,8,27)});	
+					this.waves.push({time:7000,
+						enemies : this.loadWave(1,9,58)});	
+					this.waves.push({time:8000,
+						enemies : this.loadWave(5,11,64)});					
+				break;
+				case 9:
+				this.waves.push({time:20,
+					enemies : this.loadWave(17,12,23*4+3)});
+				break;
+			}
 		}
 	}
 
@@ -173,7 +300,12 @@ class Game
 		ctx.lineWidth=3*rW;
 		ctx.fillStyle="white";
 
-
+		
+		ctx.strokeStyle="blue";
+		ctx.beginPath();
+		bullets_ally.forEach(x => x.draw());
+		ctx.stroke();
+				ctx.fill();
 		ctx.strokeStyle="red";
 		ctx.beginPath();
 		bullets_enemy.forEach(x => x.draw());
@@ -184,20 +316,15 @@ class Game
 
 		ctx.setLineDash([]);
 
+		
 		ctx.fillStyle="white";
-		ctx.strokeStyle="blue";
-		ctx.beginPath();
-		bullets_ally.forEach(x => x.draw());
-		ctx.stroke();
-		ctx.fill();
-
 
 		ctx.strokeStyle="black";
 		heros.draw();
 
 
 		background.drawForHUD();
-		hud.draw();
+		hud.draw(this.level);
 	}
 
 	cleanup()
@@ -209,7 +336,7 @@ class Game
 
 	switchScreen()
 	{
-		if(this.gameOver)return new GameOver();
+		if(this.gameOver)return new GameOver(this.level);
 		if(enemies.length == 0 && bullets_enemy.length == 0){
 			var flag = true;
 			this.waves.forEach(x => {if(x.time >= this.frameCount)flag = false})
