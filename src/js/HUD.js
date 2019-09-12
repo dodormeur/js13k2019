@@ -22,7 +22,7 @@ class HUD
 		filledRect(x+130,52,350,30,heros.armor/heros.maxArmor);
 
 		ctx.fillStyle="orange";
-		filledRect(x+130,92,350,30,0.2);
+		filledRect(x+130,92,350,30,heros.energy/heros.maxEnergy);
 
 
 	}

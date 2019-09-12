@@ -38,9 +38,8 @@ function init()
 	background = new Background();
 	resizeCanvas();
 	lastFrame = window.performance.now();
-	state = new Shop();
 	heros = new Heros();
-	state.init();
+	state = new MainMenu();
 	step(lastFrame);
 }
 
@@ -60,15 +59,18 @@ function step(timestamp)
 	while(frameDelta>frameTime)
 	{
 		state.frame();
+		state.cleanup();
+		frameFX();
 		frameDelta-=frameTime;
 	}
-
+	ctx.save();
+	drawFXBefore();
 	state.draw();
-	state.cleanup();
 
 	var temp = state.switchScreen();
 	if(temp != null)state = temp;
 	debug();
+	ctx.restore();
 	window.requestAnimationFrame(step);
 }
 
@@ -84,6 +86,20 @@ function debug()
 	blackText("fps:"+Math.round(10000/meanFps)/10, 1590,40,35,"end");
 	d_pointer++;
 	if(d_pointer>120)d_pointer = 0;
+
+	//debugHit();
+}
+
+function debugHit()
+{
+	ctx.fillStyle="transparent";
+	ctx.strokeStyle="magenta";
+	ctx.lineWidth=1;
+	bullets_ally.forEach(x => x.hit.debug());
+	bullets_enemy.forEach(x => x.hit.debug());
+	enemies.forEach(x => x.getHitbox().debug());
+	heros.hit.debug();
+	heros.bulletproofHit.debug();
 }
 
 setTimeout(init,50);
